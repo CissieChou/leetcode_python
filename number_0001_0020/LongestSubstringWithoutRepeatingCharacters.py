@@ -1,3 +1,6 @@
+from __future__ import print_function
+
+
 class Solution(object):
     def lengthOfLongestSubstring(self, s):
         """
@@ -25,4 +28,4 @@ class Solution(object):
 if __name__ == '__main__':
     solution = Solution()
     s = "pwwkew"
-    print solution.lengthOfLongestSubstring(s)
+    print (solution.lengthOfLongestSubstring(s))

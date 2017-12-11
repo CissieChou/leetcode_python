@@ -1,3 +1,6 @@
+from __future__ import print_function
+
+
 class Solution(object):
     def convert(self, s, numRows):
         """
@@ -30,4 +33,4 @@ class Solution(object):
 if __name__ == '__main__':
     solution = Solution()
     s = "PAHNAPLSIIGYIR"
-    print solution.convert(s, 3)
+    print (solution.convert(s, 3))
