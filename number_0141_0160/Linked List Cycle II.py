@@ -10,3 +10,23 @@ class Solution(object):
         :type head: ListNode
         :rtype: ListNode
         """
+        pre = head
+        tail = head
+
+        flag = False
+        while pre and pre.next:
+            pre = pre.next.next
+            tail = tail.next
+            if pre == tail:
+                flag = True
+                break
+
+        if flag:
+            tail = head
+            while not tail == pre:
+                tail = tail.next
+                pre = pre.next
+
+            return tail
+        else:
+            return None
