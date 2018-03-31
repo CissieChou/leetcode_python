@@ -45,6 +45,22 @@ class Solution:
 
             level += 1
 
+    def connect_recursive(self, root):
+        if root:
+            return
+        dummy = TreeNode(-1)
+        pre = dummy
+        cur = root
+        while cur:
+            if cur.left:
+                pre.next = cur.left
+                pre = cur.left
+            if cur.right:
+                pre.next = cur.right
+                pre = cur.right
+            cur = cur.next
+        self.connect_recursive(dummy.next)
+
 if __name__ == '__main__':
     node1 = TreeNode(1)
     node2 = TreeNode(2)
