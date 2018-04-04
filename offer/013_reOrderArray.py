@@ -2,7 +2,7 @@
 class Solution:
     def reOrderArray(self, array):
         # write code here
-        if array is None:
+        if not array:
             return
 
         for i in range(len(array)):
