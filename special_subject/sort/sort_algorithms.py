@@ -130,7 +130,8 @@ class MergeSort:
         for index, num in enumerate(temp, left):
             A[index] = num
 
+
 if __name__ == '__main__':
     mergeSort = MergeSort()
     case, length = [54,35,48,36,27,12,44,44,8,14,26,17,28],13
-    print mergeSort.mergeSort(case, length)
+    print (mergeSort.mergeSort(case, length))
