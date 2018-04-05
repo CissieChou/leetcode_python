@@ -7,4 +7,10 @@
 class Solution:
     def TreeDepth(self, pRoot):
         # write code here
-        pass
+        if pRoot is None:
+            return 0
+
+        left = self.TreeDepth(pRoot.left)
+        right = self.TreeDepth(pRoot.right)
+
+        return max(left, right) + 1
