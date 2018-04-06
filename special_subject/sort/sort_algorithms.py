@@ -1,4 +1,6 @@
 # -*- coding:utf-8 -*-
+import copy
+import heapq
 
 class BubbleSort:
     def bubbleSort(self, A, n):
@@ -71,7 +73,7 @@ class ShellSort:
 class QuickSort:
     def quickSort(self, A, n):
         # write code here
-        self.doQuickSort(A, 0, n - 1)
+        self.doQuickSort2(A, 0, n - 1)
         return A
 
     def doQuickSort(self, A, left,right):
@@ -91,6 +93,48 @@ class QuickSort:
         A[left_point] = judge_num
         self.doQuickSort(A, left, left_point - 1)
         self.doQuickSort(A, left_point + 1, right)
+
+    def doQuickSort2(self, array, left, right):
+        if left >= right:
+            return
+        j = self.partition(array, left, right)
+        self.doQuickSort2(array, left, j - 1)
+        self.doQuickSort2(array, j + 1, right)
+
+    def partition(self, array, left, right):
+        i = left + 1
+        j = right
+
+        num = array[left]
+        while True:
+            while i < right and array[i] < num:
+                i += 1
+            while j > left and array[j] > num:
+                j -= 1
+            if i >= j:
+                break
+            self.swap(array, i, j)
+
+        self.swap(array, left, j)
+        return j
+
+    def swap(self, array, i, j):
+        array[i], array[j] = array[j], array[i]
+
+    def findKthLargest(self, array, k):
+        k = len(array) - k
+        left = 0
+        right = len(array) - 1
+        while left < right:
+            j = self.partition(array, left, right)
+            if j == k:
+                break
+            if j < k:
+                left = j + 1
+            else:
+                right = j - 1
+        return array[k]
+
 
 # -*- coding:utf-8 -*-
 
@@ -131,7 +175,119 @@ class MergeSort:
             A[index] = num
 
 
+class HeapSort():
+    def heapSort(self, array):
+        for index in range(len(array)/2 -1, -1, -1):
+            self.adjust(array, index, len(array) -1)
+
+        for end in range(len(array)-1, 0, -1):
+            array[0], array[end] = array[end], array[0]
+            self.adjust(array, 0, end - 1)
+
+    def adjust(self, array, start, end):
+        root = start
+
+        child = root*2 + 1
+        while child <= end:
+            if child+1 <= end and array[child] < array[child+1]:
+                child += 1
+
+            if array[child] > array[root]:
+                array[root], array[child] = array[child], array[root]
+                root = child
+            else:
+                break
+
+            child = root*2 + 1
+
+
+class GetTopK():
+    def getTopK(self, array, k):
+        if len(array) <= k:
+            return array
+
+        topKHeap = copy.deepcopy(array[:k])
+        for index in range(k/2 - 1, -1, -1):
+            self.adjust(topKHeap, index, k - 1)
+
+        for num in array[k:]:
+            if num > topKHeap[0]:
+                topKHeap[0] = num
+            self.adjust(topKHeap, 0, k-1)
+
+        return topKHeap
+
+    def getKth(self, array, k):
+        return self.getTopK(array, k)[0]
+
+    def adjust(self, array, start, end):
+        root = start
+
+        child = root*2 + 1
+        while child <= end:
+            if child+1 <= end and array[child] > array[child+1]:
+                child += 1
+
+            if array[child] < array[root]:
+                array[root], array[child] = array[child], array[root]
+                root = child
+            else:
+                break
+
+            child = root*2 + 1
+    '''
+    from leetcode
+    '''
+    # O(nlgn) time
+    def findKthLargest1(self, nums, k):
+        return sorted(nums, reverse=True)[k - 1]
+
+    # O(nk) time, bubble sort idea, TLE
+    def findKthLargest2(self, nums, k):
+        for i in range(k):
+            for j in range(len(nums) - i - 1):
+                if nums[j] > nums[j + 1]:
+                    # exchange elements, time consuming
+                    nums[j], nums[j + 1] = nums[j + 1], nums[j]
+        return nums[len(nums) - k]
+
+    # O(nk) time, selection sort idea
+    def findKthLargest3(self, nums, k):
+        for i in range(len(nums), len(nums) - k, -1):
+            tmp = 0
+            for j in range(i):
+                if nums[j] > nums[tmp]:
+                    tmp = j
+            nums[tmp], nums[i - 1] = nums[i - 1], nums[tmp]
+        return nums[len(nums) - k]
+
+    # O(k+(n-k)lgk) time, min-heap
+    def findKthLargest4(self, nums, k):
+        heap = []
+        for num in nums:
+            heapq.heappush(heap, num)
+        for _ in range(len(nums) - k):
+            heapq.heappop(heap)
+        return heapq.heappop(heap)
+
+    # O(k+(n-k)lgk) time, min-heap
+    def findKthLargest5(self, nums, k):
+        return heapq.nlargest(k, nums)[k - 1]
+
+
 if __name__ == '__main__':
     mergeSort = MergeSort()
     case, length = [54,35,48,36,27,12,44,44,8,14,26,17,28],13
-    print (mergeSort.mergeSort(case, length))
+    # print (mergeSort.mergeSort(case, length))
+    #
+    # heapSort = HeapSort()
+    # heapSort.heapSort(case)
+    # print (case)
+
+    getTopK = GetTopK()
+    print (getTopK.getKth(case, 1))
+    #
+    quickSort = QuickSort()
+    print (quickSort.findKthLargest(case, 2))
+    quickSort.quickSort(case, len(case))
+    print (case)
