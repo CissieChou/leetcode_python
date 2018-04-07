@@ -2,4 +2,4 @@
 class Solution:
     def Sum_Solution(self, n):
         # write code here
-        pass
+        return sum(range(1, n+1))

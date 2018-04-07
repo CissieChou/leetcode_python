@@ -1,39 +1,22 @@
-# -*- coding:utf-8 -*-
-# class TreeNode:
-#     def __init__(self, x):
-#         self.val = x
-#         self.left = None
-#         self.right = None
-
-class MaxSubtree:
-    def getNode(self, root):
-        if root.left:
-            lnode, lcount, lMaxNum, lMinNum = self.getNode(root.left)
-        else:
-            lnode, lcount, lMaxNum, lMinNum = None, 0, 0, 0
-
-        if root.right:
-            rnode, rcount, rMaxNum, rMinNum = self.getNode(root.right)
-        else:
-            rnode, rcount, rMaxNum, rMinNum = None, 0, 0, 0
-
-        if lMaxNum < root.val and root.val < rMinNum and lnode == root.left and rnode == root.right:
-            return root, lcount + rcount + 1, rMaxNum, lMinNum
-        else:
-            if lcount == 0 and rcount == 0:
-                return root, 1, root.val, root.val
-            if lcount > rcount:
-                if lMaxNum < root.val and lnode == root.left and rcount == 0:
-                    return root, lcount + 1, root.val, lMinNum
-                else:
-                    return lnode, lcount, lMaxNum, lMinNum
-            else:
-                if root.val < rMinNum and rnode == root.right and lcount == 0:
-                    return root, rcount + 1, rMaxNum, root.val
-                else:
-                    return rnode, rcount, rMaxNum, rMinNum
-
-    def getMax(self, root):
-        # write code here
-        node, count, maxNum, minNum = self.getNode(root)
-        return node
+# coding=utf-8
+import sys
+if __name__ == "__main__":
+    [n, m] = [int(x) for x in sys.stdin.readline().strip().split()]
+    data_list = []
+    for i in range(n):
+        data_list.append([int(x) for x in sys.stdin.readline().strip().split()])
+    value_list = [[i, int(x)] for i, x in enumerate(sys.stdin.readline().strip().split())]
+    value_dict = {}
+    data_list.sort(key=lambda x : (x[1], x[0]), reverse=True)
+    value_list.sort(key = lambda x : x[1], reverse=True)
+    i = 0; j = 0
+    while i < n and j < m:
+        if value_list[j][1] >= data_list[i][0]:
+            if value_list[j][0] not in value_dict:
+                value_dict[value_list[j][0]] = data_list[i][1]
+            elif value_dict[value_list[j][0]] < data_list[i][1]:
+                value_dict[value_list[j][0]] = data_list[i][1]
+            j += 1
+        else: i += 1
+    for i in range(m):
+        print(value_dict[i])

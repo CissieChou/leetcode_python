@@ -19,13 +19,13 @@ class Solution:
             cur = cur.right
         if cur:
             cur.right = pRootOfTree
-            # pRootOfTree.left = cur
+            pRootOfTree.left = cur
 
         right = self.Convert(pRootOfTree.right)
 
         if right:
             right.left = pRootOfTree
-            # pRootOfTree.right = right
+            pRootOfTree.right = right
 
         if left_head:
             return left_head
