@@ -21,3 +21,14 @@ class Solution:
 
         return pre
 
+    def ReverseList2(self, pHead):
+        if pHead is None or pHead.next is None:
+            return pHead
+
+        next = pHead.next
+        pHead.next = None
+        new_head = self.ReverseList2(next)
+        next.next = pHead
+        return new_head
+
+
