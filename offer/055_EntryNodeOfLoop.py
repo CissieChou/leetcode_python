@@ -6,4 +6,25 @@
 class Solution:
     def EntryNodeOfLoop(self, pHead):
         # write code here
-        pass
+
+        if pHead is None:
+            return None
+        slow = pHead
+        fast = pHead
+
+        while fast and fast.next:
+            fast = fast.next.next
+            slow = slow.next
+
+            if slow == fast:
+                fast = pHead
+                while not fast == slow:
+                    fast = fast.next
+                    slow = slow.next
+                return slow
+
+        return None
+
+
+
+
