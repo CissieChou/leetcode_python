@@ -13,4 +13,19 @@ class Solution(object):
         :rtype: List[int]
         """
 
-        pass
+        level_result = dict()
+        max_depth = -1
+
+        stack = [(0, root)]
+        while len(stack) > 0:
+            depth, node = stack.pop()
+
+            if node:
+                max_depth = max(max_depth, depth)
+
+                level_result.setdefault(depth, node.val)
+
+                stack.append((depth+1, node.left))
+                stack.append((depth+1, node.right))
+
+        return [level_result[depth] for depth in range(max_depth+1)]
