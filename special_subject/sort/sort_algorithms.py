@@ -107,9 +107,9 @@ class QuickSort:
 
         num = array[left]
         while True:
-            while i < right and array[i] < num:
+            while i < right and array[i] <= num:
                 i += 1
-            while j > left and array[j] > num:
+            while j > left and array[j] >= num:
                 j -= 1
             if i >= j:
                 break
