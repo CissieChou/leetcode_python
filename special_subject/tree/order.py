@@ -40,6 +40,12 @@ def postOrder(root):
     stack = []
     cur = root
     while len(stack) > 0 or cur:
-        stack.append(cur)
-        result.insert(0, cur.val)
-        cur = cur.right
+        if cur:
+            stack.append(cur)
+            result.insert(0, cur.val)
+            cur = cur.right
+        else:
+            cur = stack.pop()
+            cur = cur.left
+
+    return result
