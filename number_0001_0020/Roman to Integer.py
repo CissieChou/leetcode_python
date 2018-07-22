@@ -8,14 +8,28 @@ class Solution(object):
         :rtype: int
         """
 
-        roman_value_tuples = [("M", 1000), ("CM", 900), ("D", 500), ("CD", 400),
-                              ("C", 100), ("XC", 90), ("L", 50), ("XL", 40),
-                              ("X", 10), ("IX", 9), ("V", 5), ("IV", 4), ("I", 1)]
+        ch_num_dict = {
+            "I": 1,
+            "V": 5,
+            "X": 10,
+            "L": 100,
+            "C": 100,
+            "D": 500,
+            "M": 1000
+        }
 
-        length = len(s)
+        sum_result = 0
+        for index, ch in enumerate(s):
+            if index < len(s) - 1:
+                if ch_num_dict[ch] < ch_num_dict[s[index +1]]:
+                    sum_result -= ch_num_dict[ch]
+                else:
+                    sum_result += ch_num_dict[ch]
+            else:
+                sum_result += ch_num_dict[ch]
 
-        result = 0
-        index = 0
+        return sum_result
+
 
 if __name__ == '__main__':
     solution = Solution()

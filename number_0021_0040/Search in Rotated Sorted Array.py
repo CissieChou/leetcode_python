@@ -17,15 +17,15 @@ class Solution(object):
                 return mid
 
             if nums[mid] >= nums[0]:
-                if target >= nums[0] and target < nums[mid]:
-                    right = mid - 1
+                if nums[0] <= target < nums[mid]:
+                    right = mid
                 else:
                     left = mid + 1
             else:
-                if target > nums[mid] and target <= nums[-1]:
+                if nums[mid] < target <= nums[-1]:
                     left = mid + 1
                 else:
-                    right = mid - 1
+                    right = mid
 
         if nums[left] == target:
             result = left
