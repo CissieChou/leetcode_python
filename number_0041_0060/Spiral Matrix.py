@@ -7,51 +7,28 @@ class Solution(object):
         if len(matrix) == 0 or len(matrix[0]) == 0:
             return []
 
-        row_length = len(matrix)
-        col_length = len(matrix[0])
-        count = 0
-        total_count = row_length * col_length
+        col_left = 0
+        col_right = len(matrix[0]) - 1
 
-        cycle = 0
-        result = []
-        while count < total_count:
-            print count
-            for index in range(cycle, col_length - cycle):
-                print index
-                result.append(matrix[cycle][index])
-                count += 1
+        row_up = 0
+        row_down = len(matrix) - 1
+        results = []
+        while col_left <= col_right and row_up <= row_down:
 
-            for index in range(cycle + 1, row_length - cycle):
-                result.append(matrix[index][col_length - cycle - 1])
-                count += 1
+            for index in range(col_left, col_right + 1):
+                results.append(matrix[row_up][index])
+            for index in range(row_up + 1, row_down + 1):
+                results.append(matrix[index][col_right])
+            if row_up < row_down:
+                for index in range(col_right - 1, col_left - 1, -1):
+                    results.append(matrix[row_down][index])
+            if col_left < col_right:
+                for index in range(row_down - 1, row_up, -1):
+                    results.append(matrix[index][col_left])
 
-            if count >= total_count:
-                break
+            col_left += 1
+            col_right -= 1
+            row_up += 1
+            row_down -= 1
+        return results
 
-            for index in range(col_length - cycle - 2, cycle - 1, -1):
-                result.append(matrix[row_length - cycle - 1][index])
-                count += 1
-
-            for index in range(row_length - cycle - 2, cycle, -1):
-                result.append(matrix[index][cycle])
-                count += 1
-
-            cycle += 1
-
-        return result
-
-if __name__ == '__main__':
-    length = 4
-    matrix = []
-
-    count = 0
-
-    for i in range(length):
-        matrix.append([])
-        for j in range(length):
-            count += 1
-            matrix[-1].append(count)
-
-    matrix = [[3], [2]]
-    solution = Solution()
-    print solution.spiralOrder(matrix)

@@ -14,7 +14,7 @@ class Solution(object):
         k -= 1
         numbers = list(range(1, n + 1))
         for index in range(n):
-            number = k/factorial[n - index - 1]
+            number = int(k/factorial[n - index - 1])
             result += str(numbers[number])
             numbers.remove(numbers[number])
             k -= number * factorial[n - index - 1]
@@ -23,4 +23,4 @@ class Solution(object):
 
 if __name__ == '__main__':
     solution = Solution()
-    print solution.getPermutation(1,1)
+    print (solution.getPermutation(3,3))

@@ -30,4 +30,4 @@ class Solution(object):
 if __name__ == '__main__':
     s = "......a....."
     solution = Solution()
-    print solution.isPalindrome(s)
+    print (solution.isPalindrome(s))
